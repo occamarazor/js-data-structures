@@ -83,11 +83,11 @@ class SinglyLinkedList {
   }
 }
 
-const linkedList = new SinglyLinkedList();
-linkedList.log();
-linkedList.insert(111);
-linkedList.log();
-linkedList.insert(222);
-linkedList.log();
-linkedList.insert(333);
-linkedList.log();
+const singlyLinkedList = new SinglyLinkedList();
+singlyLinkedList.log();
+singlyLinkedList.insert(111);
+singlyLinkedList.log();
+singlyLinkedList.insert(222);
+singlyLinkedList.log();
+singlyLinkedList.insert(333);
+singlyLinkedList.log();
