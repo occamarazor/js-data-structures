@@ -37,12 +37,12 @@ class Node {
 class LinkedList {
   #head = null;
   #tail = null;
-  #count = 0;
+  #nodes = 0;
   
   insert(data) {
     const newNode = new Node(data);
     
-    if(this.#count === 0) {
+    if(this.#nodes === 0) {
       this.#head = newNode;
       this.#tail = newNode;
     } else {
@@ -50,7 +50,7 @@ class LinkedList {
       this.#tail = newNode;
     }
     
-    this.#count += 1;
+    this.#nodes += 1;
   }
   
   find(data) {
@@ -64,7 +64,10 @@ class LinkedList {
   }
   
   log() {
-    console.log(`Node count: ${this.#count}`);
+    console.log(`Head: ${this.#head?.data || this.#head}`);
+    console.log(`Tail: ${this.#tail?.data || this.#tail}`);
+    console.log(`Nodes: ${this.#nodes}`);
+    
     let currentNode = this.#head;
     
     while(currentNode !== null) {
