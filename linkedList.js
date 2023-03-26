@@ -21,13 +21,18 @@ class Node {
   set next(next) {
     this.#next = next;
   }
+  
+  log() {
+    console.log(`
+    Data: ${this.data}
+    Next: ${this.next}
+    `);
+  }
 }
 
-const testNode = new Node(1);
-console.log(testNode);
-console.log(testNode.data);
+const testNode = new Node(11);
+testNode.log();
 testNode.data = 42;
-console.log(testNode.data);
-console.log(testNode.next);
+testNode.log();
 testNode.next = 'NEXT_ADDRESS';
-console.log(testNode.next);
+testNode.log();
