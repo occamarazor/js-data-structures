@@ -10,9 +10,9 @@ class Node {
     return this.#data;
   }
   
-  set data(data) {
-    this.#data = data;
-  }
+  // set data(data) {
+  //   this.#data = data;
+  // }
   
   get next() {
     return this.#next;
@@ -22,9 +22,9 @@ class Node {
     this.#next = next;
   }
   
-  log() {
-    console.log(`Data: ${this.data}    Next: ${this.next} `);
-  }
+  // log() {
+  //   console.log(`Data: ${this.#data}    Next: ${this.#next} `);
+  // }
 }
 
 // const testNode = new Node(11);
@@ -38,7 +38,7 @@ class LinkedList {
   #head = null;
   #tail = null;
   #count = 0;
-
+  
   insert(data) {
     const newNode = new Node(data);
     
