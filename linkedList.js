@@ -34,13 +34,18 @@ class Node {
 // testNode.next = 'NEXT_ADDRESS';
 // testNode.log();
 
-class LinkedList {
+class SinglyLinkedList {
   #head = null;
-  #tail = null;
+  #tail = null; // Stored for efficiency
   #nodes = 0;
   
   insert(data) {
     const newNode = new Node(data);
+    
+    // Reverse singly linked list
+    // Wrong: in fact head is tail; next is previous
+    // newNode.next = this.#head;
+    // this.#head = newNode;
     
     if(this.#nodes === 0) {
       this.#head = newNode;
@@ -50,7 +55,7 @@ class LinkedList {
       this.#tail = newNode;
     }
     
-    this.#nodes += 1;
+    this.#nodes++;
   }
   
   find(data) {
@@ -78,7 +83,7 @@ class LinkedList {
   }
 }
 
-const linkedList = new LinkedList();
+const linkedList = new SinglyLinkedList();
 linkedList.log();
 linkedList.insert(111);
 linkedList.log();
