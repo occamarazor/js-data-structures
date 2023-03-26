@@ -38,43 +38,19 @@ class LinkedList {
   #head = null;
   #tail = null;
   #count = 0;
-  
-  get head() {
-    return this.#head;
-  }
-  
-  set head(head) {
-    this.#head = head;
-  }
-  
-  get tail() {
-    return this.#tail;
-  }
-  
-  set tail(tail) {
-    this.#tail = tail;
-  }
-  
-  get count() {
-    return this.#count;
-  }
-  
-  set count(count) {
-    this.#count = count;
-  }
-  
+
   insert(data) {
     const newNode = new Node(data);
     
-    if(this.count === 0) {
-      this.head = newNode;
-      this.tail = newNode;
+    if(this.#count === 0) {
+      this.#head = newNode;
+      this.#tail = newNode;
     } else {
-      this.tail.next = newNode;
-      this.tail = newNode;
+      this.#tail.next = newNode;
+      this.#tail = newNode;
     }
     
-    this.count += 1;
+    this.#count += 1;
   }
   
   find(data) {
@@ -88,8 +64,8 @@ class LinkedList {
   }
   
   log() {
-    console.log(`Node count: ${this.count}`);
-    let currentNode = this.head;
+    console.log(`Node count: ${this.#count}`);
+    let currentNode = this.#head;
     
     while(currentNode !== null) {
       console.log(`Node: ${currentNode.data}    Next: ${currentNode.next?.data || currentNode.next}`);
