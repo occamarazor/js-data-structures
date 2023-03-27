@@ -74,6 +74,7 @@ class SinglyLinkedList {
   }
   
   // O(n)
+  // Find a node by value
   find(value) {
     let currentNode = this.#head;
     let index = 0;
@@ -91,10 +92,41 @@ class SinglyLinkedList {
     console.log(`Node with value "${value}" not found`);
   }
   
-  // TODO: delete item at index
   // O(1)
+  // Delete node by index
   delete(index) {
-    console.log(index);
+    if(index > this.#nodes - 1) {
+      console.log(`Index "${index}" out of range`);
+    } else if(index === 0) {
+      this.#head = this.#head.next;
+      if(this.#nodes === 1) {
+        this.#tail = this.#head;
+      }
+      this.#nodes--;
+      console.log('Node at zero index deleted');
+    } else {
+      let currentIndex = 0;
+      let prevNode = null;
+      let currentNode = this.#head;
+      
+      while(currentNode !== null) {
+        if(currentIndex === index) {
+          if(currentIndex === this.#nodes - 1) {
+            this.#tail = prevNode;
+            console.log('Node at last index deleted');
+          } else {
+            console.log(`Node at index "${index}" deleted`);
+          }
+          prevNode.next = currentNode.next;
+          this.#nodes--;
+          break;
+        } else {
+          prevNode = currentNode;
+          currentNode = currentNode.next;
+          currentIndex++;
+        }
+      }
+    }
   }
   
   log() {
@@ -118,7 +150,13 @@ singlyLinkedList.append(111);
 singlyLinkedList.append(222);
 singlyLinkedList.append(333);
 singlyLinkedList.append(444);
-singlyLinkedList.log();
+singlyLinkedList.append(555);
 // Find
 singlyLinkedList.find(123);
 singlyLinkedList.find(444);
+// Delete
+singlyLinkedList.delete(4);
+singlyLinkedList.delete(0);
+singlyLinkedList.delete(1);
+singlyLinkedList.delete(3);
+singlyLinkedList.log();
