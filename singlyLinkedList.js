@@ -2,8 +2,8 @@ class Node {
   #value;
   #next = null;
   
-  constructor(data) {
-    this.#value = data;
+  constructor(value) {
+    this.#value = value;
   }
   
   get value() {
@@ -36,21 +36,18 @@ class Node {
 
 class SinglyLinkedList {
   #head = null;
-  #tail = null; // Stored for efficiency
+  #tail = null;
   #nodes = 0;
   
-  getByIndex(i) {
-    // TODO: get an item by index
-    console.log(i);
+  // TODO: access an item by index
+  // O(n)
+  get(index) {
+    console.log(index);
   }
   
-  insert(data) {
-    const newNode = new Node(data);
-    
-    // Reverse singly linked list
-    // Wrong: in fact head is tail; next is previous
-    // newNode.next = this.#head;
-    // this.#head = newNode;
+  // O(1)
+  append(value) {
+    const newNode = new Node(value);
     
     if(this.#nodes === 0) {
       this.#head = newNode;
@@ -63,12 +60,14 @@ class SinglyLinkedList {
     this.#nodes++;
   }
   
-  insertAtIndex(i) {
-    // TODO: insert item at index
-    console.log(i);
+  // TODO: insert item at index
+  // O(1)
+  insert(value, index) {
+    console.log(index);
   }
   
-  findByValue(value) {
+  // O(n)
+  find(value) {
     let currentNode = this.#head;
     
     while(currentNode !== null) {
@@ -83,9 +82,10 @@ class SinglyLinkedList {
     console.log(`Node with value "${value}" not found`);
   }
   
-  deleteAtIndex(i) {
-    // TODO: delete item at index
-    console.log(i);
+  // TODO: delete item at index
+  // O(1)
+  delete(index) {
+    console.log(index);
   }
   
   log() {
@@ -106,12 +106,14 @@ class SinglyLinkedList {
 const singlyLinkedList = new SinglyLinkedList();
 // Insert
 singlyLinkedList.log();
-singlyLinkedList.insert(111);
+singlyLinkedList.append(111);
 singlyLinkedList.log();
-singlyLinkedList.insert(222);
+singlyLinkedList.append(222);
 singlyLinkedList.log();
-singlyLinkedList.insert(333);
+singlyLinkedList.append(333);
+singlyLinkedList.log();
+singlyLinkedList.append(444);
 singlyLinkedList.log();
 // Find
-singlyLinkedList.findByValue(123);
-singlyLinkedList.findByValue(333);
+singlyLinkedList.find(123);
+singlyLinkedList.find(333);
