@@ -39,13 +39,20 @@ class SinglyLinkedList {
   #tail = null;
   #nodes = 0;
   
-  // TODO: access an item by index
+  // TODO: Access an node by index
   // O(n)
   get(index) {
     console.log(index);
   }
   
+  // TODO: Insert node at the start
   // O(1)
+  prepend(value) {
+    console.log(value);
+  }
+  
+  // O(1)
+  // Insert node at the end
   append(value) {
     const newNode = new Node(value);
     
@@ -60,7 +67,7 @@ class SinglyLinkedList {
     this.#nodes++;
   }
   
-  // TODO: insert item at index
+  // TODO: Insert node at index
   // O(1)
   insert(value, index) {
     console.log(index);
@@ -69,13 +76,15 @@ class SinglyLinkedList {
   // O(n)
   find(value) {
     let currentNode = this.#head;
+    let index = 0;
     
     while(currentNode !== null) {
       if(currentNode.value === value) {
-        console.log(`Node with value "${value}" found`);
+        console.log(`Node with value "${value}" found at index ${index}`);
         return;
       } else {
         currentNode = currentNode.next;
+        index++;
       }
     }
     
@@ -104,16 +113,12 @@ class SinglyLinkedList {
 }
 
 const singlyLinkedList = new SinglyLinkedList();
-// Insert
-singlyLinkedList.log();
+// Append
 singlyLinkedList.append(111);
-singlyLinkedList.log();
 singlyLinkedList.append(222);
-singlyLinkedList.log();
 singlyLinkedList.append(333);
-singlyLinkedList.log();
 singlyLinkedList.append(444);
 singlyLinkedList.log();
 // Find
 singlyLinkedList.find(123);
-singlyLinkedList.find(333);
+singlyLinkedList.find(444);
