@@ -1,76 +1,66 @@
-class Node {
-  #value;
-  #next = null;
-  
-  constructor(value) {
-    this.#value = value;
-  }
-  
-  get value() {
-    return this.#value;
-  }
-  
-  // set value(value) {
-  //   this.#value = value;
-  // }
-  
-  get next() {
-    return this.#next;
-  }
-  
-  set next(next) {
-    this.#next = next;
-  }
-  
-  // log() {
-  //   console.log(`Value: ${this.#value}    Next: ${this.#next} `);
-  // }
-}
-
-// const testNode = new Node(11);
-// testNode.log();
-// testNode.value = 42;
-// testNode.log();
-// testNode.next = 'NEXT_ADDRESS';
-// testNode.log();
+import LinkedListNode from './linkedListNode.js';
 
 class SinglyLinkedList {
   #head = null;
   #tail = null;
   #nodes = 0;
   
-  // TODO: Access an node by index
+  // TODO: Access node by index
   // O(n)
   get(index) {
     console.log(index);
   }
   
-  // TODO: Insert node at the start
-  // O(1)
-  prepend(value) {
-    console.log(value);
-  }
-  
-  // O(1)
-  // Insert node at the end
-  append(value) {
-    const newNode = new Node(value);
+  // Initiate head & tail with new node
+  #firstNodeCheck(value, func) {
+    const newNode = new LinkedListNode(value);
     
     if(this.#nodes === 0) {
       this.#head = newNode;
       this.#tail = newNode;
     } else {
-      this.#tail.next = newNode;
-      this.#tail = newNode;
+      func(newNode);
     }
     
     this.#nodes++;
   }
   
-  // TODO: Insert node at index
+  // Insert node at the start
+  // O(1)
+  prepend(value) {
+    const prepend = (newNode) => {
+      const oldHead = this.#head;
+      this.#head = newNode;
+      this.#head.next = oldHead;
+    }
+    
+    this.#firstNodeCheck(value, prepend);
+  }
+  
+  // O(1)
+  // Insert node at the end
+  append(value) {
+    const append = (newNode) => {
+      this.#tail.next = newNode;
+      this.#tail = newNode;
+    }
+    
+    this.#firstNodeCheck(value, append);
+  }
+  
+  // Insert node at index
   // O(1)
   insert(value, index) {
-    console.log(index);
+    if(index > this.#nodes) {
+      console.log(`Index "${index}" out of range`);
+    } else if(index === 0) {
+      this.prepend(value);
+    } else if(index === this.#nodes) {
+      this.append(value);
+    } else {
+      // TODO: Insert node at index
+      console.log(index);
+    }
   }
   
   // O(n)
@@ -145,18 +135,31 @@ class SinglyLinkedList {
 }
 
 const singlyLinkedList = new SinglyLinkedList();
-// Append
-singlyLinkedList.append(111);
-singlyLinkedList.append(222);
-singlyLinkedList.append(333);
-singlyLinkedList.append(444);
-singlyLinkedList.append(555);
-// Find
-singlyLinkedList.find(123);
-singlyLinkedList.find(444);
-// Delete
-singlyLinkedList.delete(4);
-singlyLinkedList.delete(0);
-singlyLinkedList.delete(1);
-singlyLinkedList.delete(3);
+// // Prepend
+// singlyLinkedList.prepend(333);
+// singlyLinkedList.prepend(222);
+// singlyLinkedList.prepend(111);
+// singlyLinkedList.log();
+// // Append
+// singlyLinkedList.append(111);
+// singlyLinkedList.append(222);
+// singlyLinkedList.append(333);
+// singlyLinkedList.append(444);
+// singlyLinkedList.append(555);
+// singlyLinkedList.log();
+// Insert
+singlyLinkedList.insert(333, 0);
+singlyLinkedList.insert(111, 0);
+singlyLinkedList.insert(444, 2);
+singlyLinkedList.insert(555, 3);
+singlyLinkedList.insert(222, 1);
 singlyLinkedList.log();
+// // Find
+// singlyLinkedList.find(123);
+// singlyLinkedList.find(444);
+// // Delete
+// singlyLinkedList.delete(4);
+// singlyLinkedList.delete(0);
+// singlyLinkedList.delete(1);
+// singlyLinkedList.delete(3);
+// singlyLinkedList.log();
