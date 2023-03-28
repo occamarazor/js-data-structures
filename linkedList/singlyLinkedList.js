@@ -1,9 +1,44 @@
-import LinkedListNode from './linkedListNode.js';
+import SinglyLinkedListNode from './singlyLinkedListNode.js';
 
 class SinglyLinkedList {
   #head = null;
   #tail = null;
   #nodes = 0;
+  
+  // Find node by index and execute callback if found
+  #findNodeByIndex(index, nodeFoundCallback) {
+    let currentNode = this.#head;
+    let prevNode = null;
+    let currentIndex = 0;
+    
+    while(currentNode !== null) {
+      if(currentIndex === index) {
+        nodeFoundCallback(currentNode, prevNode);
+        break;
+      } else {
+        prevNode = currentNode;
+        currentNode = currentNode.next;
+        currentIndex++;
+      }
+    }
+  }
+  
+  // Check if node is a first and
+  // Initiate head & tail with new node
+  // OR execute insert callback
+  #firstNodeCheck(value, insertCallback, indexString) {
+    const newNode = new SinglyLinkedListNode(value);
+    
+    if(this.#nodes === 0) {
+      this.#head = newNode;
+      this.#tail = newNode;
+    } else {
+      insertCallback(newNode);
+    }
+    
+    this.#nodes++;
+    console.log(`Node ${newNode.value} at ${indexString} index inserted`);
+  }
   
   // Access first node
   accessFirst() {
@@ -19,18 +54,11 @@ class SinglyLinkedList {
   
   // Access node at index
   accessAtIndex(index) {
-    let currentIndex = 0;
-    let currentNode = this.#head;
+    const accessAtIndexCallback = (currentNode) => {
+      console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
+    };
     
-    while(currentNode !== null) {
-      if(currentIndex === index) {
-        console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
-        break;
-      } else {
-        currentNode = currentNode.next;
-        currentIndex++;
-      }
-    }
+    this.#findNodeByIndex(index, accessAtIndexCallback);
   }
   
   // O(n)
@@ -47,62 +75,39 @@ class SinglyLinkedList {
     }
   }
   
-  // Initiate head & tail with new node
-  #firstNodeCheck(value, insertFunc, indexString) {
-    const newNode = new LinkedListNode(value);
-    
-    if(this.#nodes === 0) {
-      this.#head = newNode;
-      this.#tail = newNode;
-    } else {
-      insertFunc(newNode);
-    }
-    
-    this.#nodes++;
-    console.log(`Node ${newNode.value} at ${indexString} index inserted`);
-  }
-  
   // Insert node at the start
   insertAtStart(value) {
-    const insertAtStartFunc = (newNode) => {
+    const insertAtStartCallback = (newNode) => {
       const oldHead = this.#head;
       this.#head = newNode;
       this.#head.next = oldHead;
     }
     
-    this.#firstNodeCheck(value, insertAtStartFunc, 'zero');
+    this.#firstNodeCheck(value, insertAtStartCallback, 'zero');
   }
   
   // Insert node at the end
   insertAtEnd(value) {
-    const insertAtStartFunc = (newNode) => {
+    const insertAtEndCallback = (newNode) => {
       this.#tail.next = newNode;
       this.#tail = newNode;
     }
     
-    this.#firstNodeCheck(value, insertAtStartFunc, 'last');
+    this.#firstNodeCheck(value, insertAtEndCallback, 'last');
   }
   
   // Insert node at index
   insertAtIndex(value, index) {
-    const newNode = new LinkedListNode(value);
-    let currentIndex = 0;
-    let prevNode = null;
-    let currentNode = this.#head;
+    const newNode = new SinglyLinkedListNode(value);
     
-    while(currentNode !== null) {
-      if(currentIndex === index) {
-        prevNode.next = newNode;
-        newNode.next = currentNode;
-        this.#nodes++;
-        console.log(`Node ${newNode.value} at index "${index}" inserted`);
-        break;
-      } else {
-        prevNode = currentNode;
-        currentNode = currentNode.next;
-        currentIndex++;
-      }
-    }
+    const insertAtIndexCallback = (currentNode, prevNode) => {
+      prevNode.next = newNode;
+      newNode.next = currentNode;
+      this.#nodes++;
+      console.log(`Node ${newNode.value} at index "${index}" inserted`);
+    };
+    
+    this.#findNodeByIndex(index, insertAtIndexCallback);
   }
   
   // O(1)
@@ -145,27 +150,18 @@ class SinglyLinkedList {
   
   // Delete node at index
   deleteAtIndex(index) {
-    let currentIndex = 0;
-    let prevNode = null;
-    let currentNode = this.#head;
-    
-    while(currentNode !== null) {
-      if(currentIndex === index) {
-        prevNode.next = currentNode.next;
-        if(currentIndex === this.#nodes - 1) {
-          this.#tail = prevNode;
-          console.log(`Node ${currentNode.value} at last index deleted`);
-        } else {
-          console.log(`Node ${currentNode.value} at index "${index}" deleted`);
-        }
-        this.#nodes--;
-        break;
+    const deleteAtIndexCallback = (currentNode, prevNode) => {
+      prevNode.next = currentNode.next;
+      if(index === this.#nodes - 1) {
+        this.#tail = prevNode;
+        console.log(`Node ${currentNode.value} at last index deleted`);
       } else {
-        prevNode = currentNode;
-        currentNode = currentNode.next;
-        currentIndex++;
+        console.log(`Node ${currentNode.value} at index "${index}" deleted`);
       }
-    }
+      this.#nodes--;
+    };
+    
+    this.#findNodeByIndex(index, deleteAtIndexCallback);
   }
   
   // O(1)
@@ -183,6 +179,7 @@ class SinglyLinkedList {
     }
   }
   
+  // TODO: reuse findNodeByIndex
   // O(n)
   // Search node by value
   search(value) {
