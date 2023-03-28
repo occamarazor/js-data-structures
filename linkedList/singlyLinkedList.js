@@ -12,7 +12,7 @@ class SinglyLinkedList {
   }
   
   // Initiate head & tail with new node
-  #firstNodeCheck(value, insertFunc) {
+  #firstNodeCheck(value, insertFunc, indexString) {
     const newNode = new LinkedListNode(value);
     
     if(this.#nodes === 0) {
@@ -23,6 +23,7 @@ class SinglyLinkedList {
     }
     
     this.#nodes++;
+    console.log(`Node ${newNode.value} at ${indexString} index inserted`);
   }
   
   // Insert node at the start
@@ -31,10 +32,9 @@ class SinglyLinkedList {
       const oldHead = this.#head;
       this.#head = newNode;
       this.#head.next = oldHead;
-      console.log(`Node ${newNode.value} at zero index inserted`);
     }
     
-    this.#firstNodeCheck(value, prependFunc);
+    this.#firstNodeCheck(value, prependFunc, 'zero');
   }
   
   // Insert node at the end
@@ -42,10 +42,9 @@ class SinglyLinkedList {
     const appendFunc = (newNode) => {
       this.#tail.next = newNode;
       this.#tail = newNode;
-      console.log(`Node ${newNode.value} at last index inserted`);
     }
     
-    this.#firstNodeCheck(value, appendFunc);
+    this.#firstNodeCheck(value, appendFunc, 'last');
   }
   
   // Insert node at index
@@ -105,30 +104,43 @@ class SinglyLinkedList {
   
   // Delete first node
   deleteFirst() {
-    this.#head = this.#head.next;
+    const currentNode = this.#head;
+    this.#head = currentNode.next;
     if(this.#nodes === 1) {
       this.#tail = this.#head;
     }
     this.#nodes--;
-    console.log('Node at zero index deleted');
+    console.log(`Node ${currentNode.value} at zero index deleted`);
   }
   
-  // TODO: split?
+  // Reference for Doubly Linked List
+  // Delete last node
+  // deleteLast() {
+  //   const currentNode = this.#tail;
+  //   this.#tail = currentNode.prev;
+  //   if(this.#nodes === 1) {
+  //     this.#head = this.#tail;
+  //   }
+  //   this.#nodes--;
+  //   console.log(`Node ${currentNode.value} at last index deleted`);
+  // }
+  
   // Delete node at index
   deleteAtIndex(index) {
     let currentIndex = 0;
     let prevNode = null;
     let currentNode = this.#head;
     
+    // TODO: test all tail/node sequence
     while(currentNode !== null) {
       if(currentIndex === index) {
+        prevNode.next = currentNode.next;
         if(currentIndex === this.#nodes - 1) {
           this.#tail = prevNode;
-          console.log('Node at last index deleted');
+          console.log(`Node ${currentNode.value} at last index deleted`);
         } else {
-          console.log(`Node at index "${index}" deleted`);
+          console.log(`Node ${currentNode.value} at index "${index}" deleted`);
         }
-        prevNode.next = currentNode.next;
         this.#nodes--;
         break;
       } else {
@@ -142,18 +154,20 @@ class SinglyLinkedList {
   // O(1)
   // Delete node
   delete(index) {
-    if(index > this.#nodes - 1) {
+    if(index > this.#nodes) {
       console.log(`Index "${index}" out of range`);
     } else if(index === 0) {
       this.deleteFirst();
+      // } else if(index === this.#nodes - 1) {
+      //   this.deleteLast();
     } else {
       this.deleteAtIndex(index);
     }
   }
   
   log() {
-    console.log(`Head: ${this.#head?.value || this.#head}`);
-    console.log(`Tail: ${this.#tail?.value || this.#tail}`);
+    console.log(`HEAD    Value: ${this.#head?.value || this.#head}    Next: ${this.#head?.next?.value || null}`);
+    console.log(`TAIL    Value: ${this.#tail?.value || this.#tail}    Next: ${this.#tail?.next?.value || null}`);
     console.log(`Nodes: ${this.#nodes}`);
     
     let currentNode = this.#head;
@@ -180,12 +194,12 @@ const singlyLinkedList = new SinglyLinkedList();
 // singlyLinkedList.append(555);
 // singlyLinkedList.log();
 // Insert
-singlyLinkedList.insert(333, 0);
-singlyLinkedList.insert(111, 0);
-singlyLinkedList.insert(444, 2);
-singlyLinkedList.insert(666, 3);
-singlyLinkedList.insert(555, 3);
-singlyLinkedList.insert(222, 1);
+// singlyLinkedList.insert(333, 0);
+// singlyLinkedList.insert(111, 0);
+// singlyLinkedList.insert(444, 2);
+// singlyLinkedList.insert(666, 3);
+// singlyLinkedList.insert(555, 3);
+// singlyLinkedList.insert(222, 1);
 singlyLinkedList.log();
 // // Find
 // singlyLinkedList.find(123);
