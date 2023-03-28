@@ -31,6 +31,7 @@ class SinglyLinkedList {
       const oldHead = this.#head;
       this.#head = newNode;
       this.#head.next = oldHead;
+      console.log(`Node ${newNode.value} at zero index inserted`);
     }
     
     this.#firstNodeCheck(value, prependFunc);
@@ -41,19 +42,32 @@ class SinglyLinkedList {
     const appendFunc = (newNode) => {
       this.#tail.next = newNode;
       this.#tail = newNode;
+      console.log(`Node ${newNode.value} at last index inserted`);
     }
     
     this.#firstNodeCheck(value, appendFunc);
   }
   
-  // TODO: Insert node at index
+  // Insert node at index
   insertAtIndex(value, index) {
-    const insertAtIndexFunc = (newNode) => {
-      console.log(index);
-      console.log(newNode);
-    }
+    const newNode = new LinkedListNode(value);
+    let currentIndex = 0;
+    let prevNode = null;
+    let currentNode = this.#head;
     
-    this.#firstNodeCheck(value, insertAtIndexFunc);
+    while(currentNode !== null) {
+      if(currentIndex === index) {
+        prevNode.next = newNode;
+        newNode.next = currentNode;
+        this.#nodes++;
+        console.log(`Node ${newNode.value} at index "${index}" inserted`);
+        break;
+      } else {
+        prevNode = currentNode;
+        currentNode = currentNode.next;
+        currentIndex++;
+      }
+    }
   }
   
   // O(1)
@@ -169,6 +183,7 @@ const singlyLinkedList = new SinglyLinkedList();
 singlyLinkedList.insert(333, 0);
 singlyLinkedList.insert(111, 0);
 singlyLinkedList.insert(444, 2);
+singlyLinkedList.insert(666, 3);
 singlyLinkedList.insert(555, 3);
 singlyLinkedList.insert(222, 1);
 singlyLinkedList.log();
