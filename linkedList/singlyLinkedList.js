@@ -7,7 +7,7 @@ class SinglyLinkedList {
   
   // O(n)
   // TODO: Access node by index
-  get(index) {
+  access(index) {
     console.log(index);
   }
   
@@ -27,24 +27,24 @@ class SinglyLinkedList {
   }
   
   // Insert node at the start
-  prepend(value) {
-    const prependFunc = (newNode) => {
+  insertAtStart(value) {
+    const insertAtStartFunc = (newNode) => {
       const oldHead = this.#head;
       this.#head = newNode;
       this.#head.next = oldHead;
     }
     
-    this.#firstNodeCheck(value, prependFunc, 'zero');
+    this.#firstNodeCheck(value, insertAtStartFunc, 'zero');
   }
   
   // Insert node at the end
-  append(value) {
-    const appendFunc = (newNode) => {
+  insertAtEnd(value) {
+    const insertAtStartFunc = (newNode) => {
       this.#tail.next = newNode;
       this.#tail = newNode;
     }
     
-    this.#firstNodeCheck(value, appendFunc, 'last');
+    this.#firstNodeCheck(value, insertAtStartFunc, 'last');
   }
   
   // Insert node at index
@@ -70,36 +70,17 @@ class SinglyLinkedList {
   }
   
   // O(1)
-  // Insert node
+  // Insert node by index
   insert(value, index) {
     if(index > this.#nodes) {
-      console.log(`Index "${index}" out of range`);
+      console.log(`Node insert failed: index "${index}" out of range`);
     } else if(index === 0) {
-      this.prepend(value);
+      this.insertAtStart(value);
     } else if(index === this.#nodes) {
-      this.append(value);
+      this.insertAtEnd(value);
     } else {
       this.insertAtIndex(value, index);
     }
-  }
-  
-  // O(n)
-  // Find node
-  find(value) {
-    let currentNode = this.#head;
-    let index = 0;
-    
-    while(currentNode !== null) {
-      if(currentNode.value === value) {
-        console.log(`Node with value "${value}" found at index ${index}`);
-        return;
-      } else {
-        currentNode = currentNode.next;
-        index++;
-      }
-    }
-    
-    console.log(`Node with value "${value}" not found`);
   }
   
   // Delete first node
@@ -113,7 +94,7 @@ class SinglyLinkedList {
     console.log(`Node ${currentNode.value} at zero index deleted`);
   }
   
-  // Reference for Doubly Linked List
+  // TODO: Reference left for Doubly Linked List
   // Delete last node
   // deleteLast() {
   //   const currentNode = this.#tail;
@@ -131,7 +112,6 @@ class SinglyLinkedList {
     let prevNode = null;
     let currentNode = this.#head;
     
-    // TODO: test all tail/node sequence
     while(currentNode !== null) {
       if(currentIndex === index) {
         prevNode.next = currentNode.next;
@@ -152,12 +132,13 @@ class SinglyLinkedList {
   }
   
   // O(1)
-  // Delete node
+  // Delete node by index
   delete(index) {
-    if(index > this.#nodes) {
-      console.log(`Index "${index}" out of range`);
+    if(index > this.#nodes - 1) {
+      console.log(`Node deletion failed: index "${index}" out of range`);
     } else if(index === 0) {
       this.deleteFirst();
+      // TODO: Reference left for Doubly Linked List
       // } else if(index === this.#nodes - 1) {
       //   this.deleteLast();
     } else {
@@ -165,10 +146,33 @@ class SinglyLinkedList {
     }
   }
   
-  log() {
+  // O(n)
+  // Search node by value
+  search(value) {
+    let currentNode = this.#head;
+    let index = 0;
+    
+    while(currentNode !== null) {
+      if(currentNode.value === value) {
+        console.log(`Node with value "${value}" found at index ${index}`);
+        return;
+      } else {
+        currentNode = currentNode.next;
+        index++;
+      }
+    }
+    
+    console.log(`Node with value "${value}" not found`);
+  }
+  
+  // Log linked list: head, tail, nodes count
+  // Log each node: value, next
+  toString() {
+    console.log('--------------------------------');
     console.log(`HEAD    Value: ${this.#head?.value || this.#head}    Next: ${this.#head?.next?.value || null}`);
     console.log(`TAIL    Value: ${this.#tail?.value || this.#tail}    Next: ${this.#tail?.next?.value || null}`);
-    console.log(`Nodes: ${this.#nodes}`);
+    console.log(`NODES: ${this.#nodes}`);
+    console.log('--------------------------------');
     
     let currentNode = this.#head;
     
@@ -176,37 +180,38 @@ class SinglyLinkedList {
       console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
       currentNode = currentNode.next;
     }
-    console.log('-----------------------');
+    console.log('--------------------------------');
   }
 }
 
 const singlyLinkedList = new SinglyLinkedList();
-// // Prepend
-// singlyLinkedList.prepend(333);
-// singlyLinkedList.prepend(222);
-// singlyLinkedList.prepend(111);
-// singlyLinkedList.log();
-// // Append
-// singlyLinkedList.append(111);
-// singlyLinkedList.append(222);
-// singlyLinkedList.append(333);
-// singlyLinkedList.append(444);
-// singlyLinkedList.append(555);
-// singlyLinkedList.log();
+
+// Prepend
+singlyLinkedList.insertAtStart(333);
+singlyLinkedList.insertAtStart(222);
+singlyLinkedList.insertAtStart(111);
+
+// Append
+singlyLinkedList.insertAtEnd(111);
+singlyLinkedList.insertAtEnd(222);
+singlyLinkedList.insertAtEnd(333);
+
 // Insert
-// singlyLinkedList.insert(333, 0);
-// singlyLinkedList.insert(111, 0);
-// singlyLinkedList.insert(444, 2);
-// singlyLinkedList.insert(666, 3);
-// singlyLinkedList.insert(555, 3);
-// singlyLinkedList.insert(222, 1);
-singlyLinkedList.log();
-// // Find
-// singlyLinkedList.find(123);
-// singlyLinkedList.find(444);
-// // Delete
-// singlyLinkedList.delete(4);
-// singlyLinkedList.delete(0);
-// singlyLinkedList.delete(1);
-// singlyLinkedList.delete(3);
-// singlyLinkedList.log();
+singlyLinkedList.insert(333, 0);
+singlyLinkedList.insert(111, 0);
+singlyLinkedList.insert(444, 2);
+singlyLinkedList.insert(666, 3);
+singlyLinkedList.insert(555, 3);
+singlyLinkedList.insert(222, 1);
+singlyLinkedList.insert(999, 7);
+
+// Delete
+singlyLinkedList.delete(4);
+singlyLinkedList.delete(0);
+singlyLinkedList.delete(1);
+singlyLinkedList.delete(3);
+singlyLinkedList.toString();
+
+// Find
+singlyLinkedList.search('NO_SUCH_NODE');
+singlyLinkedList.search(444);
