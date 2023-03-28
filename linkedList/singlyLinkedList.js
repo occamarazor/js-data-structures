@@ -5,10 +5,46 @@ class SinglyLinkedList {
   #tail = null;
   #nodes = 0;
   
+  // Access first node
+  accessFirst() {
+    const currentNode = this.#head;
+    console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
+  }
+  
+  // Access last node
+  accessLast() {
+    const currentNode = this.#tail;
+    console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
+  }
+  
+  // Access node at index
+  accessAtIndex(index) {
+    let currentIndex = 0;
+    let currentNode = this.#head;
+    
+    while(currentNode !== null) {
+      if(currentIndex === index) {
+        console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
+        break;
+      } else {
+        currentNode = currentNode.next;
+        currentIndex++;
+      }
+    }
+  }
+  
   // O(n)
-  // TODO: Access node by index
+  // Access node by index
   access(index) {
-    console.log(index);
+    if(index > this.#nodes - 1) {
+      console.log(`Node access failed: index "${index}" out of range`);
+    } else if(index === 0) {
+      this.accessFirst();
+    } else if(index === this.#nodes - 1) {
+      this.accessLast();
+    } else {
+      this.accessAtIndex(index);
+    }
   }
   
   // Initiate head & tail with new node
@@ -99,6 +135,7 @@ class SinglyLinkedList {
   // deleteLast() {
   //   const currentNode = this.#tail;
   //   this.#tail = currentNode.prev;
+  //   this.#tail.next = currentNode.next;
   //   if(this.#nodes === 1) {
   //     this.#head = this.#tail;
   //   }
@@ -168,7 +205,6 @@ class SinglyLinkedList {
   // Log linked list: head, tail, nodes count
   // Log each node: value, next
   toString() {
-    console.log('--------------------------------');
     console.log(`HEAD    Value: ${this.#head?.value || this.#head}    Next: ${this.#head?.next?.value || null}`);
     console.log(`TAIL    Value: ${this.#tail?.value || this.#tail}    Next: ${this.#tail?.next?.value || null}`);
     console.log(`NODES: ${this.#nodes}`);
@@ -180,7 +216,6 @@ class SinglyLinkedList {
       console.log(`Node: ${currentNode.value}    Next: ${currentNode.next?.value || currentNode.next}`);
       currentNode = currentNode.next;
     }
-    console.log('--------------------------------');
   }
 }
 
@@ -190,11 +225,13 @@ const singlyLinkedList = new SinglyLinkedList();
 singlyLinkedList.insertAtStart(333);
 singlyLinkedList.insertAtStart(222);
 singlyLinkedList.insertAtStart(111);
+console.log('--------------------------------');
 
 // Append
 singlyLinkedList.insertAtEnd(111);
 singlyLinkedList.insertAtEnd(222);
 singlyLinkedList.insertAtEnd(333);
+console.log('--------------------------------');
 
 // Insert
 singlyLinkedList.insert(333, 0);
@@ -204,14 +241,25 @@ singlyLinkedList.insert(666, 3);
 singlyLinkedList.insert(555, 3);
 singlyLinkedList.insert(222, 1);
 singlyLinkedList.insert(999, 7);
+console.log('--------------------------------');
 
 // Delete
 singlyLinkedList.delete(4);
 singlyLinkedList.delete(0);
 singlyLinkedList.delete(1);
 singlyLinkedList.delete(3);
-singlyLinkedList.toString();
+console.log('--------------------------------');
 
-// Find
+// Log
+singlyLinkedList.toString();
+console.log('--------------------------------');
+
+// Search
 singlyLinkedList.search('NO_SUCH_NODE');
 singlyLinkedList.search(444);
+console.log('--------------------------------');
+
+// Access
+singlyLinkedList.access(0);
+singlyLinkedList.access(8);
+singlyLinkedList.access(9);

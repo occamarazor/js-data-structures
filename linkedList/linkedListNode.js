@@ -22,16 +22,16 @@ class LinkedListNode {
     this.#next = next;
   }
   
-  // log() {
-  //   console.log(`Value: ${this.#value}    Next: ${this.#next} `);
-  // }
+  toString() {
+    console.log(`Value: ${this.#value}    Next: ${this.#next} `);
+  }
 }
 
 // const testNode = new LinkedListNode(11);
-// testNode.log();
+// testNode.toString();
 // testNode.value = 42;
-// testNode.log();
+// testNode.toString();
 // testNode.next = 'NEXT_ADDRESS';
-// testNode.log();
+// testNode.toString();
 
 export default LinkedListNode;
